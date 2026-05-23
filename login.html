@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DailyPawgress – Login</title>
+    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="auth-body">
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-logo">
+            <h1>Daily<span>Pawgress</span></h1>
+            <p class="auth-tagline">Your Personal Study Companion</p>
+        </div>
+
+        <div class="auth-tabs">
+            <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Login</button>
+            <button class="auth-tab" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <div id="form-login" class="auth-form">
+            <div class="auth-field">
+                <label for="login-user"><i class="fas fa-user"></i> Username</label>
+                <input type="text" id="login-user" placeholder="Enter your username">
+            </div>
+            <div class="auth-field">
+                <label for="login-pass"><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="login-pass" placeholder="Enter your password">
+            </div>
+            <p class="auth-error" id="login-error"></p>
+            <button class="auth-btn" onclick="handleLogin()">Login <i class="fas fa-paw"></i></button>
+        </div>
+
+        <!-- SIGNUP FORM -->
+        <div id="form-signup" class="auth-form" style="display:none;">
+            <div class="auth-field">
+                <label for="signup-user"><i class="fas fa-user"></i> Username</label>
+                <input type="text" id="signup-user" placeholder="Choose a username">
+            </div>
+            <div class="auth-field">
+                <label for="signup-pass"><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="signup-pass" placeholder="Choose a password">
+            </div>
+            <div class="auth-field">
+                <label for="signup-confirm"><i class="fas fa-lock"></i> Confirm Password</label>
+                <input type="password" id="signup-confirm" placeholder="Confirm your password">
+            </div>
+            <p class="auth-error" id="signup-error"></p>
+            <button class="auth-btn" onclick="handleSignup()">Create Account <i class="fas fa-paw"></i></button>
+        </div>
+
+        <p class="auth-foot">© 2024 DailyPawgress · Made with <i class="fas fa-heart" style="color:palevioletred"></i></p>
+    </div>
+</div>
+
+<script src="auth.js"></script>
+</body>
+</html>

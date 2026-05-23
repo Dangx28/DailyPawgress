@@ -1,0 +1,448 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  font-size: 16px;
+}
+
+body {
+  font-family: "Nunito", sans-serif;
+  background-color: #fdf6ee;
+  color: #3a2010;
+  line-height: 1.6;
+}
+
+section {
+  padding: 5rem 9%;
+}
+
+span {
+  color: palevioletred;
+}
+
+/* ── HEADER ── */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 6%;
+  background-color: #fdf6ee;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+header .logo a {
+  font-size: 28px;
+  font-weight: 700;
+  color: rgba(146, 69, 64, 0.925);
+}
+
+header .navbar a {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(146, 69, 64, 0.925);
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+header .navbar a:hover {
+  background-color: rgba(146, 69, 64, 0.08);
+}
+
+header .icons a {
+  font-size: 16px;
+  color: rgba(146, 69, 64, 0.925);
+  padding: 6px 8px;
+  border-radius: 8px;
+}
+
+header .icons a:hover {
+  background-color: rgba(146, 69, 64, 0.08);
+}
+
+header #bar {
+  display: none;
+}
+
+header .fa-bars {
+  font-size: 24px;
+  color: rgba(146, 69, 64, 0.925);
+  cursor: pointer;
+  display: none;
+}
+
+/* ── HERO ── */
+.firstpage {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  padding-top: 7rem;
+  padding-left: 18rem;
+  background: url("background.png") no-repeat center center / cover;
+}
+
+.intro-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: palevioletred;
+  margin-bottom: 0.5rem;
+}
+
+.firstpage .introduction h2 {
+  font-size: 50px;
+  font-weight: 700;
+  color: rgba(146, 69, 64, 0.925);
+  margin-bottom: 1rem;
+}
+
+.intro-sub {
+  font-size: 17px;
+  color: rgba(58, 32, 16, 0.6);
+  margin-bottom: 2rem;
+}
+
+.cta-button {
+  display: inline-block;
+  background-color: rgba(146, 69, 64, 0.925);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+.cta-button:hover {
+  background-color: rgba(100, 40, 35, 0.95);
+  transform: translateY(-2px);
+}
+
+/* ── CHARACTER & PET SECTIONS ── */
+
+.char-icon img,
+.pet-icon img {
+  pointer-events: none;
+}
+
+.chabg {
+  background-color: #fdf6ee;
+}
+.petsbg {
+  background-color: #f5ede0;
+}
+
+.myCharacter,
+.myVirtualPet {
+  display: flex;
+  align-items: flex-start;
+  gap: 4rem;
+}
+
+.section-info {
+  flex: 0 0 250px;
+  position: sticky;
+  top: 100px;
+}
+
+.section-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #fff;
+  background-color: palevioletred;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 0.75rem;
+}
+
+.section-info h2 {
+  font-size: 34px;
+  font-weight: 700;
+  color: rgba(146, 69, 64, 0.925);
+  margin-bottom: 1rem;
+}
+
+.charactercontent p,
+.petscontent p {
+  font-size: 15px;
+  color: rgba(58, 32, 16, 0.6);
+  margin-bottom: 0.3rem;
+}
+
+.changename,
+.petname {
+  margin-top: 2rem;
+}
+
+.form-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(146, 69, 64, 0.925);
+  margin-bottom: 0.75rem;
+}
+
+.fname label,
+.pfname label {
+  display: block;
+  font-size: 13px;
+  font-style: italic;
+  color: rgba(58, 32, 16, 0.6);
+  margin-bottom: 6px;
+}
+
+.fname input,
+.pfname input {
+  display: block;
+  width: 220px;
+  height: 44px;
+  background: #fff;
+  border: 1.5px solid rgba(146, 69, 64, 0.2);
+  border-radius: 999px;
+  padding: 0 18px;
+  font-size: 14px;
+  font-family: "Nunito", sans-serif;
+  color: #3a2010;
+  margin-bottom: 12px;
+  outline: none;
+}
+
+.fname input:focus,
+.pfname input:focus {
+  border-color: palevioletred;
+}
+
+.button,
+.pbutton {
+  border: none;
+  border-radius: 999px;
+  background-color: rgba(146, 69, 64, 0.925);
+  color: #fff;
+  font-family: "Nunito", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 22px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+.button:hover,
+.pbutton:hover {
+  background-color: rgba(100, 40, 35, 0.95);
+  transform: translateY(-1px);
+}
+
+/* ── CHARACTER / PET GRID ── */
+.characters,
+.petschibi {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chi,
+.pchi {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.box,
+.pbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.box img,
+.pbox img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  background: #fff;
+  padding: 12px;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.box img:hover,
+.pbox img:hover {
+  transform: translateY(-5px) scale(1.04);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+}
+
+.name-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(146, 69, 64, 0.925);
+  background: rgba(146, 69, 64, 0.08);
+  padding: 3px 14px;
+  border-radius: 999px;
+}
+
+/* ── PLACEHOLDER SECTIONS ── */
+.placeholder-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  background-color: #fdf6ee;
+  text-align: center;
+}
+
+.placeholder-section.alt-bg {
+  background-color: #f5ede0;
+}
+
+.placeholder-icon {
+  font-size: 38px;
+  color: rgba(146, 69, 64, 0.2);
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.placeholder-content h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: rgba(146, 69, 64, 0.925);
+  margin-bottom: 0.5rem;
+}
+
+.placeholder-content p {
+  font-size: 15px;
+  color: rgba(58, 32, 16, 0.5);
+}
+
+/* ── FOOTER ── */
+footer {
+  background-color: rgba(146, 69, 64, 0.925);
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+  padding: 1.5rem 2rem;
+  font-size: 14px;
+}
+
+footer span {
+  color: #ffc0cb;
+}
+footer .fa-heart {
+  color: #ffc0cb;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1280px) {
+  .firstpage {
+    padding-top: 7rem;
+    padding-left: 10rem;
+  }
+  .firstpage .introduction h2 {
+    font-size: 42px;
+  }
+}
+
+@media (max-width: 980px) {
+  header .fa-bars {
+    display: block;
+  }
+  header .navbar {
+    display: none;
+  }
+
+  header #bar:checked ~ .navbar {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #fdf6ee;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  header #bar:checked ~ .navbar a {
+    display: block;
+    padding: 10px 16px;
+  }
+
+  .firstpage {
+    padding-top: 7rem;
+    padding-left: 3rem;
+  }
+
+  .myCharacter,
+  .myVirtualPet {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .section-info {
+    position: static;
+    flex: unset;
+    width: 100%;
+    text-align: center;
+  }
+
+  .chi,
+  .pchi {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .firstpage {
+    padding-top: 7rem;
+    padding-left: 2rem;
+  }
+  .firstpage .introduction h2 {
+    font-size: 36px;
+  }
+  .chi,
+  .pchi {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .box img,
+  .pbox img {
+    width: 160px;
+    height: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .firstpage {
+    padding-top: 7rem;
+  }
+
+  .firstpage .introduction h2 {
+    font-size: 30px;
+  }
+  .box img,
+  .pbox img {
+    width: 130px;
+    height: 130px;
+  }
+}

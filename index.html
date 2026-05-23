@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="stylesheet.css" />
+    <link rel="stylesheet" href="pages.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>DailyPawgress</title>
+  </head>
+  <body>
+    <!-- ─── HEADER ─── -->
+    <header id="header">
+      <input type="checkbox" id="bar" />
+      <label for="bar" class="fas fa-bars"></label>
+      <h1 class="logo">
+        <a
+          href="#"
+          onclick="
+            showPage('home');
+            return false;
+          "
+          >Daily<span>Pawgress</span></a
+        >
+      </h1>
+      <nav class="navbar">
+        <a
+          href="#"
+          onclick="
+            navTo('home');
+            return false;
+          "
+          >Home</a
+        >
+        <a
+          href="#"
+          onclick="
+            navTo('study');
+            return false;
+          "
+          >Study Sessions</a
+        >
+        <a
+          href="#"
+          onclick="
+            navTo('todo');
+            return false;
+          "
+          >To-Do List</a
+        >
+        <a
+          href="#"
+          onclick="
+            navTo('calendar');
+            return false;
+          "
+          >Calendar</a
+        >
+        <a
+          href="#"
+          onclick="
+            navTo('sticky');
+            return false;
+          "
+          >Sticky Notes</a
+        >
+      </nav>
+      <div class="icons">
+        <div class="streak-badge">
+          <span id="nav-hearts"></span>
+          <span id="nav-streak"></span>
+        </div>
+        <span class="nav-user" id="nav-username"></span>
+        <a
+          href="#"
+          class="fas fa-sign-out-alt"
+          title="Logout"
+          onclick="
+            handleLogout();
+            return false;
+          "
+        ></a>
+      </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════
+     PAGE: HOME
+════════════════════════════════════════ -->
+    <div id="page-home">
+      <!-- HERO -->
+      <div class="colorbg">
+        <section class="firstpage" id="home-hero">
+          <div class="introduction">
+            <p class="intro-label">Your Personal Study Companion</p>
+            <h2>Daily<span>Pawgress</span></h2>
+            <p class="intro-sub">
+              Track tasks, raise your virtual pet, and make every study session
+              count.
+            </p>
+            <a
+              href="#"
+              class="cta-button"
+              onclick="
+                document
+                  .getElementById('myCharacter')
+                  .scrollIntoView({ behavior: 'smooth' });
+                return false;
+              "
+            >
+              Get Started <i class="fas fa-paw"></i>
+            </a>
+          </div>
+        </section>
+      </div>
+
+      <div id="dashboard" style="display: none" class="dashboard-section">
+        <div class="dash-layout">
+          <!-- LEFT: Pet + Character showcase -->
+          <div class="dash-left">
+            <div class="dash-pet-showcase">
+              <div class="dash-pet-bubble">
+                <div class="dash-big-icon" id="dash-big-icon"></div>
+              </div>
+              <div class="dash-pet-info">
+                <div class="dash-pet-name" id="dash-pet-name"></div>
+                <div class="dash-mood" id="dash-pet-mood"></div>
+              </div>
+            </div>
+            <div class="dash-char-showcase">
+              <div class="dash-char-bubble">
+                <div class="dash-char-icon" id="dash-char-icon"></div>
+              </div>
+              <div class="dash-char-info">
+                <div class="dash-char-label">Trainer</div>
+                <div class="dash-char-name" id="dash-char-name-display"></div>
+              </div>
+            </div>
+            <button class="dash-customize-btn" onclick="openCustomize()">
+              ✏️ Customize
+            </button>
+          </div>
+
+          <!-- RIGHT: Stats -->
+          <div class="dash-right">
+            <div class="dash-greeting" id="dash-greeting"></div>
+            <div class="dash-stats-grid">
+              <div class="dash-stat-card dash-stat-streak">
+                <div class="dash-stat-icon">🔥</div>
+                <div class="dash-stat-body">
+                  <div class="dash-stat-val" id="dash-streak">0</div>
+                  <div class="dash-stat-label">Day Streak</div>
+                </div>
+              </div>
+              <div class="dash-stat-card dash-stat-hearts">
+                <div class="dash-stat-icon">❤️</div>
+                <div class="dash-stat-body">
+                  <div class="dash-stat-val" id="dash-hearts"></div>
+                  <div class="dash-stat-label">Hearts</div>
+                </div>
+              </div>
+              <div class="dash-stat-card dash-stat-sessions">
+                <div class="dash-stat-icon">📚</div>
+                <div class="dash-stat-body">
+                  <div class="dash-stat-val" id="dash-sessions">0</div>
+                  <div class="dash-stat-label">Sessions Today</div>
+                </div>
+              </div>
+              <div class="dash-stat-card dash-stat-tasks">
+                <div class="dash-stat-icon">✅</div>
+                <div class="dash-stat-body">
+                  <div class="dash-stat-val" id="dash-tasks">0</div>
+                  <div class="dash-stat-label">Tasks Done</div>
+                </div>
+              </div>
+            </div>
+            <div class="dash-tip" id="dash-tip"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 1: CHARACTER -->
+      <div class="chabg">
+        <section class="myCharacter" id="myCharacter">
+          <div class="section-info">
+            <div class="section-tag">Step 1</div>
+            <h2>My <span>Character</span></h2>
+            <p
+              style="
+                color: rgba(58, 32, 16, 0.6);
+                font-size: 15px;
+                margin-bottom: 0.3rem;
+              "
+            >
+              Choose your character and give them a name.
+            </p>
+            <div class="changename">
+              <div class="fname">
+                <label for="char-name">Character's name</label>
+                <input
+                  type="text"
+                  id="char-name"
+                  placeholder="Enter a name..."
+                />
+              </div>
+            </div>
+          </div>
+          <div class="characters">
+            <section class="chi" id="char-grid">
+              <div class="box" id="char-0" onclick="selectChar(0)">
+                <div class="char-icon">
+                  <img class="char-img" src="images/belle.png" />
+                </div>
+                <div class="chibiname">
+                  <span class="name-label">Belle</span>
+                </div>
+              </div>
+              <div class="box" id="char-1" onclick="selectChar(1)">
+                <div class="char-icon">
+                  <img class="char-img" src="images/champ.png" />
+                </div>
+                <div class="chibiname">
+                  <span class="name-label">Cody</span>
+                </div>
+              </div>
+              <div class="box" id="char-2" onclick="selectChar(2)">
+                <div class="char-icon">
+                  <img class="char-img" src="images/ryza.png" />
+                </div>
+                <div class="chibiname">
+                  <span class="name-label">Olivia</span>
+                </div>
+              </div>
+              <div class="box" id="char-3" onclick="selectChar(3)">
+                <div class="char-icon">
+                  <img class="char-img" src="images/beefy.png" />
+                </div>
+                <div class="chibiname">
+                  <span class="name-label">Eliot</span>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+      </div>
+
+      <!-- STEP 2: PET -->
+      <div class="petsbg">
+        <section class="myVirtualPet" id="myVirtualPet">
+          <div class="section-info">
+            <div class="section-tag">Step 2</div>
+            <h2>My <span>Virtual</span> Pet</h2>
+            <p
+              style="
+                color: rgba(58, 32, 16, 0.6);
+                font-size: 15px;
+                margin-bottom: 0.3rem;
+              "
+            >
+              Adopt a pet — keep them happy by studying!
+            </p>
+            <div class="petname">
+              <div class="pfname">
+                <label for="pet-name">Pet's name</label>
+                <input
+                  type="text"
+                  id="pet-name"
+                  placeholder="Enter a name..."
+                />
+              </div>
+            </div>
+            <button
+              class="button"
+              style="margin-top: 1rem"
+              onclick="completeSetup()"
+            >
+              Confirm Setup <i class="fas fa-paw"></i>
+            </button>
+            <p class="saved-msg" id="setup-msg"></p>
+          </div>
+          <div class="petschibi">
+            <section class="pchi" id="pet-grid">
+              <div class="pbox" id="pet-0" onclick="selectPet(0)">
+                <div class="pet-icon"><img src="images/dog.png" /></div>
+                <div class="pchibiname">
+                  <span class="name-label">Bear</span>
+                </div>
+              </div>
+              <div class="pbox" id="pet-1" onclick="selectPet(1)">
+                <div class="pet-icon"><img src="images/cat.png" /></div>
+                <div class="pchibiname">
+                  <span class="name-label">Willow</span>
+                </div>
+              </div>
+              <div class="pbox" id="pet-2" onclick="selectPet(2)">
+                <div class="pet-icon"><img src="images/capy.png" /></div>
+                <div class="pchibiname">
+                  <span class="name-label">Koda</span>
+                </div>
+              </div>
+              <div class="pbox" id="pet-3" onclick="selectPet(3)">
+                <div class="pet-icon"><img src="images/rabbit.png" /></div>
+                <div class="pchibiname">
+                  <span class="name-label">Mochi</span>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+      </div>
+
+      <footer>
+        <p>
+          © 2026 <strong>Daily<span>Pawgress</span></strong> · Made with
+          <i class="fas fa-heart"></i> by Mitessiepher
+        </p>
+      </footer>
+    </div>
+    <!-- /page-home -->
+
+    <!-- ═══════════════════════════════════════
+     PAGE: STUDY SESSIONS
+════════════════════════════════════════ -->
+    <div id="page-study" style="display: none">
+      <div class="inner-page">
+        <div class="page-header">
+          <div class="section-tag">Study</div>
+          <h2>Study <span>Sessions</span></h2>
+          <p class="page-sub">
+            Focus with a Pomodoro timer. Pausing longer than 5 min costs a ❤️!
+          </p>
+        </div>
+        <div class="pomodoro-card">
+          <div class="pom-mode-btns">
+            <button
+              class="pom-mode active"
+              id="mode-work"
+              onclick="setMode('work')"
+            >
+              Work (25 min)
+            </button>
+            <button class="pom-mode" id="mode-short" onclick="setMode('short')">
+              Short Break (5 min)
+            </button>
+            <button class="pom-mode" id="mode-long" onclick="setMode('long')">
+              Long Break (15 min)
+            </button>
+          </div>
+          <div class="pom-timer" id="pom-display">25:00</div>
+          <div class="pom-controls">
+            <button class="auth-btn" id="pom-btn" onclick="toggleTimer()">
+              <i class="fas fa-play"></i> Start
+            </button>
+            <button class="pom-reset-btn" onclick="resetTimer()">
+              <i class="fas fa-rotate-left"></i> Reset
+            </button>
+          </div>
+        </div>
+        <div class="page-card">
+          <h3>Session Log</h3>
+          <ul class="session-log" id="session-log"></ul>
+        </div>
+      </div>
+      <footer>
+        <p>
+          © 2024 <strong>Daily<span>Pawgress</span></strong> · Made with
+          <i class="fas fa-heart"></i> by Mitessiepher
+        </p>
+      </footer>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     PAGE: TO-DO LIST
+════════════════════════════════════════ -->
+    <div id="page-todo" style="display: none">
+      <div class="inner-page">
+        <div class="page-header">
+          <div class="section-tag">Tasks</div>
+          <h2>To-Do <span>List</span></h2>
+          <p class="page-sub">Miss a deadline → lose a ❤️. Stay on track!</p>
+        </div>
+        <div class="page-card">
+          <div class="todo-add">
+            <input
+              type="text"
+              id="todo-input"
+              placeholder="Task name..."
+              onkeydown="if (event.key === 'Enter') addTodo();"
+            />
+            <input
+              type="datetime-local"
+              id="todo-deadline"
+              class="deadline-input"
+            />
+            <button class="auth-btn" onclick="addTodo()">
+              <i class="fas fa-plus"></i> Add
+            </button>
+          </div>
+          <ul class="todo-list" id="todo-list"></ul>
+        </div>
+      </div>
+      <footer>
+        <p>
+          © 2024 <strong>Daily<span>Pawgress</span></strong> · Made with
+          <i class="fas fa-heart"></i> by Mitessiepher
+        </p>
+      </footer>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     PAGE: CALENDAR
+════════════════════════════════════════ -->
+    <div id="page-calendar" style="display: none">
+      <div class="inner-page">
+        <div class="page-header">
+          <div class="section-tag">Calendar</div>
+          <h2>My <span>Calendar</span></h2>
+          <p class="page-sub">Task deadlines appear here automatically.</p>
+        </div>
+        <div class="page-card cal-card">
+          <div class="cal-header">
+            <button class="cal-nav" onclick="changeMonth(-1)">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <h3 id="cal-title"></h3>
+            <button class="cal-nav" onclick="changeMonth(1)">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+          <div class="cal-grid" id="cal-grid"></div>
+        </div>
+        <div class="page-card" id="cal-events-panel" style="display: none">
+          <h3 id="cal-selected-label"></h3>
+          <ul class="todo-list" id="cal-event-list"></ul>
+        </div>
+      </div>
+      <footer>
+        <p>
+          © 2024 <strong>Daily<span>Pawgress</span></strong> · Made with
+          <i class="fas fa-heart"></i> by Mitessiepher
+        </p>
+      </footer>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     PAGE: STICKY NOTES
+════════════════════════════════════════ -->
+    <div id="page-sticky" style="display: none">
+      <div class="inner-page">
+        <div class="page-header">
+          <div class="section-tag">Notes</div>
+          <h2>Sticky <span>Notes</span></h2>
+        </div>
+        <div class="sticky-toolbar">
+          <button class="auth-btn" onclick="addSticky()">
+            <i class="fas fa-plus"></i> New Note
+          </button>
+          <div class="sticky-colors">
+            <span>Color:</span>
+            <button
+              class="color-dot active-color"
+              style="background: #fff9c4"
+              onclick="setStickyColor('#fff9c4', this)"
+            ></button>
+            <button
+              class="color-dot"
+              style="background: #ffd6d6"
+              onclick="setStickyColor('#ffd6d6', this)"
+            ></button>
+            <button
+              class="color-dot"
+              style="background: #d4f0d4"
+              onclick="setStickyColor('#d4f0d4', this)"
+            ></button>
+            <button
+              class="color-dot"
+              style="background: #d4e4f7"
+              onclick="setStickyColor('#d4e4f7', this)"
+            ></button>
+            <button
+              class="color-dot"
+              style="background: #f0d4f5"
+              onclick="setStickyColor('#f0d4f5', this)"
+            ></button>
+          </div>
+        </div>
+        <div class="sticky-board" id="sticky-board"></div>
+      </div>
+      <footer>
+        <p>
+          © 2024 <strong>Daily<span>Pawgress</span></strong> · Made with
+          <i class="fas fa-heart"></i> by Mitessiepher
+        </p>
+      </footer>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     POPUPS
+════════════════════════════════════════ -->
+
+    <!-- Pause warning popup -->
+    <div class="popup-overlay" id="popup-pause" style="display: none">
+      <div class="popup-card">
+        <div class="popup-icon">⏸️</div>
+        <h3>Still there?</h3>
+        <p>You've been paused. Resume in time or lose a ❤️!</p>
+        <p
+          class="pom-timer"
+          id="pause-countdown"
+          style="font-size: 2.5rem; margin: 0.5rem 0"
+        >
+          5:00
+        </p>
+        <button class="auth-btn" onclick="closePausePopup()">
+          Resume Timer
+        </button>
+      </div>
+    </div>
+
+    <!-- Neglect / heart-lost popup -->
+    <div class="popup-overlay" id="popup-neglect" style="display: none">
+      <div class="popup-card">
+        <div class="popup-icon" id="neglect-icon">😢</div>
+        <h3 id="neglect-title">You neglected your duties!</h3>
+        <p id="neglect-msg"></p>
+        <div
+          class="stat-val"
+          id="neglect-hearts"
+          style="font-size: 1.5rem; margin: 0.75rem 0"
+        ></div>
+        <button
+          class="auth-btn"
+          onclick="
+            document.getElementById('popup-neglect').style.display = 'none'
+          "
+        >
+          I'll do better!
+        </button>
+      </div>
+    </div>
+
+    <!-- Streak reset popup -->
+    <div class="popup-overlay" id="popup-reset" style="display: none">
+      <div class="popup-card">
+        <div class="popup-icon">💔</div>
+        <h3>Streak Reset!</h3>
+        <p>
+          You ran out of hearts. Your streak is back to 0, but your hearts are
+          restored. Don't let it happen again!
+        </p>
+        <button
+          class="auth-btn"
+          onclick="
+            document.getElementById('popup-reset').style.display = 'none'
+          "
+        >
+          Start Fresh
+        </button>
+      </div>
+    </div>
+
+    <!-- Exit warning popup (timer running) -->
+    <div class="popup-overlay" id="popup-leave" style="display: none">
+      <div class="popup-card">
+        <div class="popup-icon">⚠️</div>
+        <h3>Leave this page?</h3>
+        <p>Your Pomodoro timer is still running. Leaving will cost you a ❤️.</p>
+        <div class="popup-btns">
+          <button class="auth-btn" onclick="confirmLeave()">
+            Leave anyway
+          </button>
+          <button class="pom-reset-btn" onclick="cancelLeave()">Stay</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
