@@ -254,7 +254,7 @@ function getPetMoodImg(baseImg) {
 function refreshPetMood() {
   const sp = _profile.selectedPet;
   if (sp === null || sp === undefined) return;
-  const petImgs = ["dog.png", "cat.png", "capy.png", "rabbit.png"];
+  const petImgs = ["images/dog.png", "images/cat.png", "images/capy.png", "images/rabbit.png"];
   const mood = getPetMood();
   document.getElementById("dash-big-icon").innerHTML =
     `<img src="${getPetMoodImg(petImgs[sp])}" style="width:100px;height:100px;object-fit:contain;">`;
@@ -320,8 +320,8 @@ async function completeSetup() {
 }
 
 function populateDashboard(charIdx, petIdx, charName, petName) {
-  const charImgs = ["belle.png", "champ.png", "ryza.png", "beefy.png"];
-  const petImgs = ["dog.png", "cat.png", "capy.png", "rabbit.png"];
+  const charImgs = ["images/belle.png", "images/champ.png", "images/ryza.png", "images/beefy.png"];
+  const petImgs = ["images/dog.png", "images/cat.png", "images/capy.png", "images/rabbit.png"];
   const tips = [
     "💡 A 25-min Pomodoro a day keeps the procrastination away!",
     "🌟 Complete tasks before their deadline to keep your hearts!",
