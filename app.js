@@ -18,7 +18,6 @@ let currentUser = null;
 
 // ── AUTH GUARD ──
 onAuthStateChanged(auth, async (user) => {
-  console.log("Auth state:", user);
   if (!user) {
     window.location.href = "login.html";
     return;
@@ -26,6 +25,7 @@ onAuthStateChanged(auth, async (user) => {
   currentUser = user;
   document.getElementById("nav-username").textContent = "👤 " + user.email;
   await loadUserData();
+  gainStreak(); // ← add this
   updateNavBadge();
   checkStreakExpiry();
   showPage("home");
@@ -209,14 +209,18 @@ function resetStreak() {
 function gainStreak() {
   const today = new Date().toDateString();
   const lastStudy = getLastStudyDate();
-  if (lastStudy === today) return;
+
+  if (lastStudy === today) return; // already counted today
+
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
   const wasYesterday = lastStudy === yesterday.toDateString();
+
   const newStreak = wasYesterday ? getStreak() + 1 : 1;
   saveStreak(newStreak);
   saveLastStudyDate();
   updateNavBadge();
+
   const dashStreak = document.getElementById("dash-streak");
   if (dashStreak) dashStreak.textContent = newStreak;
 }
@@ -254,7 +258,12 @@ function getPetMoodImg(baseImg) {
 function refreshPetMood() {
   const sp = _profile.selectedPet;
   if (sp === null || sp === undefined) return;
-  const petImgs = ["images/dog.png", "images/cat.png", "images/capy.png", "images/rabbit.png"];
+  const petImgs = [
+    "images/dog.png",
+    "images/cat.png",
+    "images/capy.png",
+    "images/rabbit.png",
+  ];
   const mood = getPetMood();
   document.getElementById("dash-big-icon").innerHTML =
     `<img src="${getPetMoodImg(petImgs[sp])}" style="width:100px;height:100px;object-fit:contain;">`;
@@ -320,8 +329,18 @@ async function completeSetup() {
 }
 
 function populateDashboard(charIdx, petIdx, charName, petName) {
-  const charImgs = ["images/belle.png", "images/champ.png", "images/ryza.png", "images/beefy.png"];
-  const petImgs = ["images/dog.png", "images/cat.png", "images/capy.png", "images/rabbit.png"];
+  const charImgs = [
+    "images/belle.png",
+    "images/champ.png",
+    "images/ryza.png",
+    "images/beefy.png",
+  ];
+  const petImgs = [
+    "images/dog.png",
+    "images/cat.png",
+    "images/capy.png",
+    "images/rabbit.png",
+  ];
   const tips = [
     "💡 A 25-min Pomodoro a day keeps the procrastination away!",
     "🌟 Complete tasks before their deadline to keep your hearts!",
@@ -419,7 +438,6 @@ function startPomInterval() {
       pomInterval = null;
       pomRunning = false;
       btn.innerHTML = '<i class="fas fa-play"></i> Start';
-      if (pomMode === "work") gainStreak();
       logSession();
       alert("⏰ Time's up! Great work!");
     }
