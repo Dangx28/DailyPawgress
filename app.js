@@ -258,7 +258,8 @@ function getPetMood() {
     return {
       text: "😠 Human! Do something! >:(",
       suffix: "_angry",
-      popupMsg: "GRRRR!! YOU'RE NEGLECTING YOUR STUDIES!! I'm so... forget about it >:(",
+      popupMsg:
+        "GRRRR!! YOU'RE NEGLECTING YOUR STUDIES!! I'm so... forget about it >:(",
     };
   return {
     text: "😢 Please take better care of me!",

@@ -1,11 +1,7 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getAuth, connectAuthEmulator } from "firebase/auth";
+import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyA0DVFoWcr61YjHMMxmaTivEhkd-GiDX9o",
   authDomain: "dailypawgress.firebaseapp.com",
@@ -16,18 +12,19 @@ const firebaseConfig = {
   measurementId: "G-WHQ1BY3Y89",
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
-  console.log("Running locally! Connecting to Emulators...");
+// Initialize Firestore with local caching enabled so it doesn't panic offline
+const db = initializeFirestore(app, {
+  localCache: persistentLocalCache({
+    tabManager: persistentMultipleTabManager(),
+  }),
+});
 
-  // Connect to the local Auth emulator (default port is 9099)
-  connectAuthEmulator(auth, "http://localhost:9099");
+// FORCE EMULATORS CONTEXT IMMEDIATELY
+connectAuthEmulator(auth, "http://localhost:9099");
+connectFirestoreEmulator(db, "localhost", 8080);
 
-  // Connect to the local Firestore emulator (default port is 8080)
-  connectFirestoreEmulator(db, "localhost", 8080);
-}
-
-export { auth, db };
+export { app, auth, db };

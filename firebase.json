@@ -1,7 +1,9 @@
 {
+  "hosting": {
+    "public": ".",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+  },
   "firestore": {
-    "database": "(default)",
-    "location": "asia-southeast1",
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
   },
@@ -13,8 +15,8 @@
       "port": 8080
     },
     "ui": {
-      "enabled": true
-    },
-    "singleProjectMode": true
+      "enabled": true,
+      "port": 4000
+    }
   }
 }
