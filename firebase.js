@@ -13,9 +13,21 @@ const firebaseConfig = {
   storageBucket: "dailypawgress.firebasestorage.app",
   messagingSenderId: "823227535242",
   appId: "1:823227535242:web:f1da1bf50405d1591bc273",
-  measurementId: "G-WHQ1BY3Y89"
+  measurementId: "G-WHQ1BY3Y89",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+
+if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+  console.log("Running locally! Connecting to Emulators...");
+
+  // Connect to the local Auth emulator (default port is 9099)
+  connectAuthEmulator(auth, "http://localhost:9099");
+
+  // Connect to the local Firestore emulator (default port is 8080)
+  connectFirestoreEmulator(db, "localhost", 8080);
+}
+
+export { auth, db };
