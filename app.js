@@ -25,7 +25,7 @@ onAuthStateChanged(auth, async (user) => {
   currentUser = user;
   await loadUserData();
   document.getElementById("nav-username").textContent =
-    "👤 " + (_profile.charName || user.email);
+    "👤 " + (_profile.charName || " ");
   gainStreak();
   updateNavBadge();
   checkStreakExpiry();
