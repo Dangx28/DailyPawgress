@@ -16,16 +16,17 @@ import {
 
 let currentUser = null;
 
-// ── AUTH GUARD ──
+// binabantayan lagi nito if logged in ba yung user or nah!
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
     window.location.href = "login.html";
     return;
   }
   currentUser = user;
-  document.getElementById("nav-username").textContent = "👤 " + user.email;
   await loadUserData();
-  gainStreak(); // ← add this
+  document.getElementById("nav-username").textContent =
+    "👤 " + (_profile.charName || user.email);
+  gainStreak();
   updateNavBadge();
   checkStreakExpiry();
   showPage("home");
@@ -128,6 +129,7 @@ function showPage(name) {
 function navTo(name) {
   if (pomRunning && name !== "study") {
     pendingNavTarget = name;
+    updatePopupPets(); // ← add this here
     document.getElementById("popup-leave").style.display = "flex";
     return;
   }
@@ -185,6 +187,7 @@ function loseHeart(reason) {
   if (dashHearts) dashHearts.textContent = renderHearts(hearts);
 
   refreshPetMood();
+  updatePopupPets();
 
   if (hearts <= 0) {
     setTimeout(() => {
@@ -204,6 +207,7 @@ function resetStreak() {
   if (dashStreak) dashStreak.textContent = "0";
   if (dashHearts) dashHearts.textContent = renderHearts(MAX_HEARTS);
   refreshPetMood();
+  updatePopupPets();
 }
 
 function gainStreak() {
@@ -245,10 +249,22 @@ function checkStreakExpiry() {
 function getPetMood() {
   const hearts = getHearts();
   if (hearts >= 3)
-    return { text: "😊 Happy and ready to study!", suffix: "_happy" };
+    return {
+      text: "😊 HEHEHEHEHEH! HELLO!!!!",
+      suffix: "_happy",
+      popupMsg: "HEHEHEHEHHH!! thank uu for twaking cware of mee!! :3",
+    };
   if (hearts === 2)
-    return { text: "😠 Feeling neglected...", suffix: "_angry" };
-  return { text: "😢 Please take better care of me!", suffix: "_sad" };
+    return {
+      text: "😠 Human! Do something! >:(",
+      suffix: "_angry",
+      popupMsg: "GRRRR!! YOU'RE NEGLECTING YOUR STUDIES!! I'm so... forget about it >:(",
+    };
+  return {
+    text: "😢 Please take better care of me!",
+    suffix: "_sad",
+    popupMsg: "WAAAAAA!! You're making me cry, do something human!",
+  };
 }
 
 function getPetMoodImg(baseImg) {
@@ -296,6 +312,10 @@ function selectPet(idx) {
 async function completeSetup() {
   const charName = document.getElementById("char-name").value.trim();
   const petName = document.getElementById("pet-name").value.trim();
+  console.log("charName input:", charName);
+  console.log("petName input:", petName);
+  console.log("selectedChar:", selectedChar);
+  console.log("selectedPet:", selectedPet);
   const msg = document.getElementById("setup-msg");
 
   if (selectedChar === null) {
@@ -316,6 +336,7 @@ async function completeSetup() {
   }
 
   await saveProfile({ selectedChar, selectedPet, charName, petName });
+  document.getElementById("nav-username").textContent = "👤 " + charName;
 
   populateDashboard(selectedChar, selectedPet, charName, petName);
 
@@ -406,6 +427,7 @@ let pomMode = "work";
 let pomSeconds = pomDurations.work;
 let pomInterval = null;
 let pomRunning = false;
+let heartGivenForSession = false;
 
 function setMode(mode) {
   if (pomRunning) resetTimer(true);
@@ -419,6 +441,7 @@ function setMode(mode) {
 }
 
 function updateDisplay() {
+  // nirereset yung timer pabalik sa dati
   const m = String(Math.floor(pomSeconds / 60)).padStart(2, "0");
   const s = String(pomSeconds % 60).padStart(2, "0");
   document.getElementById("pom-display").textContent = m + ":" + s;
@@ -437,9 +460,20 @@ function startPomInterval() {
       clearInterval(pomInterval);
       pomInterval = null;
       pomRunning = false;
+      pomSeconds = pomDurations[pomMode];
+      updateDisplay();
       btn.innerHTML = '<i class="fas fa-play"></i> Start';
+      heartGivenForSession = false;
+
+      console.log("Timer finished, pomMode is:", pomMode);
+      if (pomMode === "work") {
+        gainStreak();
+        gainHeart();
+      }
+
       logSession();
-      alert("⏰ Time's up! Great work!");
+      updatePopupPets();
+      document.getElementById("popup-complete").style.display = "flex";
     }
   }, 1000);
 }
@@ -507,6 +541,7 @@ let pauseInterval = null;
 function startPauseCountdown() {
   pauseSeconds = PAUSE_LIMIT;
   updatePauseDisplay();
+  updatePopupPets();
   document.getElementById("popup-pause").style.display = "flex";
   pauseInterval = setInterval(() => {
     pauseSeconds--;
@@ -578,6 +613,33 @@ function renderSessionLog() {
     .join("");
 }
 
+function openEditTimer() {
+  if (pomRunning) return; // can't edit while running
+  const m = Math.floor(pomSeconds / 60);
+  const s = pomSeconds % 60;
+  document.getElementById("pom-edit-min").value = m;
+  document.getElementById("pom-edit-sec").value = s;
+  document.getElementById("pom-display").style.display = "none";
+  document.getElementById("pom-edit").style.display = "flex";
+  document.getElementById("pom-edit-btn").style.display = "none";
+}
+
+function cancelEditTimer() {
+  document.getElementById("pom-display").style.display = "block";
+  document.getElementById("pom-edit").style.display = "none";
+  document.getElementById("pom-edit-btn").style.display = "block";
+}
+
+function applyEditTimer() {
+  const m = parseInt(document.getElementById("pom-edit-min").value) || 0;
+  const s = parseInt(document.getElementById("pom-edit-sec").value) || 0;
+  const total = m * 60 + s;
+  if (total <= 0) return;
+  pomSeconds = total;
+  updateDisplay();
+  cancelEditTimer();
+}
+
 // ── TO-DO ──
 function getTodos() {
   return _todos;
@@ -612,10 +674,21 @@ async function addTodo() {
 async function toggleTodo(id) {
   const todo = _todos.find((t) => t.id === id);
   if (!todo) return;
+  const wasCompleted = todo.done;
   todo.done = !todo.done;
-  await updateDoc(doc(db, "users", currentUser.uid, "todos", todo._docId), {
-    done: todo.done,
-  });
+
+  const updates = { done: todo.done };
+
+  if (!wasCompleted && todo.done && !todo.heartGiven) {
+    gainHeart();
+    todo.heartGiven = true;
+    updates.heartGiven = true;
+  }
+
+  await updateDoc(
+    doc(db, "users", currentUser.uid, "todos", todo._docId),
+    updates,
+  );
   renderTodos();
 }
 
@@ -879,6 +952,62 @@ async function checkDeadlines() {
   if (changed) renderTodos();
 }
 
+// regain hearts
+
+function gainHeart() {
+  const hearts = getHearts();
+  if (hearts >= MAX_HEARTS) return;
+  saveHearts(hearts + 1);
+  updateNavBadge();
+
+  const dashHearts = document.getElementById("dash-hearts");
+  if (dashHearts) dashHearts.textContent = renderHearts();
+  refreshPetMood();
+}
+
+// popup pet adder
+
+function getPopupPetImg() {
+  const sp = _profile.selectedPet;
+  if (sp === null || sp === undefined) return "";
+  const petImgs = [
+    "images/dog.png",
+    "images/cat.png",
+    "images/capy.png",
+    "images/rabbit.png",
+  ];
+  return `<img src="${getPetMoodImg(petImgs[sp])}" style="width:150px;height:150px;object-fit:contain;">`;
+}
+
+function updatePopupPets() {
+  const img = getPopupPetImg();
+  const mood = getPetMood();
+  const petIds = [
+    "popup-pet-pause",
+    "popup-pet-neglect",
+    "popup-pet-reset",
+    "popup-pet-leave",
+    "popup-pet-complete",
+  ];
+  const msgIds = [
+    "popup-mood-pause",
+    "popup-mood-neglect",
+    "popup-mood-reset",
+    "popup-mood-leave",
+    "popup-mood-complete",
+  ];
+
+  petIds.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = img;
+  });
+
+  msgIds.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = mood.popupMsg;
+  });
+}
+
 // ── Expose functions to HTML ──
 window.handleLogout = handleLogout;
 window.showPage = showPage;
@@ -907,3 +1036,6 @@ window.addSticky = addSticky;
 window.deleteSticky = deleteSticky;
 window.updateStickyText = updateStickyText;
 window.setStickyColor = setStickyColor;
+window.openEditTimer = openEditTimer;
+window.cancelEditTimer = cancelEditTimer;
+window.applyEditTimer = applyEditTimer;

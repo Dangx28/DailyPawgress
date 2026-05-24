@@ -45,7 +45,7 @@
             navTo('study');
             return false;
           "
-          >Study Sessions</a
+          >Pomodoro Timer</a
         >
         <a
           href="#"
@@ -100,9 +100,7 @@
           <div class="introduction">
             <p class="intro-label">MITESSIEPHER'S VERSION</p>
             <h2>Daily<span>Pawgress</span></h2>
-            <p class="intro-sub">
-              Let's keep track of our tracks!
-            </p>
+            <p class="intro-sub">Let's keep track of our tracks!</p>
             <a
               href="#"
               class="cta-button"
@@ -201,7 +199,9 @@
             </p>
             <div class="changename">
               <div class="fname">
-                <label for="char-name">Want to change their name? <br>Character's name</label>
+                <label for="char-name"
+                  >Want to change their name? <br />Character's name</label
+                >
                 <input
                   type="text"
                   id="char-name"
@@ -266,7 +266,9 @@
             </p>
             <div class="petname">
               <div class="pfname">
-                <label for="pet-name">Want to change their name? <br>Pet's name</label>
+                <label for="pet-name"
+                  >Want to change their name? <br />Pet's name</label
+                >
                 <input
                   type="text"
                   id="pet-name"
@@ -333,6 +335,7 @@
           <h2>Study <span>Sessions</span></h2>
           <p class="page-sub">
             Focus with a Pomodoro timer. Pausing longer than 5 min costs a ❤️!
+            Finishing the timer regains you a heart!
           </p>
         </div>
         <div class="pomodoro-card">
@@ -352,6 +355,50 @@
             </button>
           </div>
           <div class="pom-timer" id="pom-display">25:00</div>
+          <div id="pom-edit" style="display: none" class="pom-edit-row">
+            <input
+              type="number"
+              id="pom-edit-min"
+              min="0"
+              max="99"
+              placeholder="mm"
+              class="pom-edit-input"
+            />
+            <span
+              style="
+                font-size: 24px;
+                font-weight: 800;
+                color: rgba(146, 69, 64, 0.925);
+              "
+              >:</span
+            >
+            <input
+              type="number"
+              id="pom-edit-sec"
+              min="0"
+              max="59"
+              placeholder="ss"
+              class="pom-edit-input"
+            />
+            <button
+              class="auth-btn"
+              style="width: auto; padding: 8px 18px; margin-top: 0"
+              onclick="applyEditTimer()"
+            >
+              Set
+            </button>
+            <button class="pom-reset-btn" onclick="cancelEditTimer()">
+              Cancel
+            </button>
+          </div>
+          <button
+            class="pom-custom-toggle"
+            id="pom-edit-btn"
+            onclick="openEditTimer()"
+            style="margin-bottom: 0.5rem"
+          >
+            <i class="fas fa-pencil"></i> Edit Time
+          </button>
           <div class="pom-controls">
             <button class="auth-btn" id="pom-btn" onclick="toggleTimer()">
               <i class="fas fa-play"></i> Start
@@ -382,7 +429,10 @@
         <div class="page-header">
           <div class="section-tag">Tasks</div>
           <h2>To-Do <span>List</span></h2>
-          <p class="page-sub">Miss a deadline → lose a ❤️. Stay on track!</p>
+          <p class="page-sub">
+            Miss a deadline → lose a ❤️. Stay on track! <br />Tip: finish a task
+            and recover a heart!
+          </p>
         </div>
         <div class="page-card">
           <div class="todo-add">
@@ -502,11 +552,54 @@
     <!-- ═══════════════════════════════════════
      POPUPS
 ════════════════════════════════════════ -->
+    <!-- Timer complete popup -->
+    <div class="popup-overlay" id="popup-complete" style="display: none">
+      <div class="popup-card">
+        <div class="popup-icon">⏰</div>
+        <p
+          id="popup-mood-complete"
+          style="
+            font-size: 13px;
+            color: rgba(58, 32, 16, 0.6);
+            margin: 0.25rem 0;
+            font-style: italic;
+          "
+        ></p>
+        <div
+          id="popup-pet-complete"
+          style="font-size: 60px; margin-bottom: 0.5rem"
+        ></div>
+        <h3>Time's Up!</h3>
+        <p>Great work! Keep it up!</p>
+        <button
+          class="auth-btn"
+          onclick="
+            document.getElementById('popup-complete').style.display = 'none'
+          "
+        >
+          Continue
+        </button>
+      </div>
+    </div>
 
     <!-- Pause warning popup -->
     <div class="popup-overlay" id="popup-pause" style="display: none">
       <div class="popup-card">
         <div class="popup-icon">⏸️</div>
+        <p
+          id="popup-mood-pause"
+          style="
+            font-size: 13px;
+            color: rgba(58, 32, 16, 0.6);
+            margin: 0.25rem 0;
+            font-style: italic;
+          "
+        ></p>
+        <div
+          id="popup-pet-pause"
+          style="font-size: 60px; margin-bottom: 0.5rem"
+        ></div>
+        <!-- after each popup-pet-{name} div -->
         <h3>Still there?</h3>
         <p>You've been paused. Resume in time or lose a ❤️!</p>
         <p
@@ -526,6 +619,19 @@
     <div class="popup-overlay" id="popup-neglect" style="display: none">
       <div class="popup-card">
         <div class="popup-icon" id="neglect-icon">😢</div>
+        <p
+          id="popup-mood-neglect"
+          style="
+            font-size: 13px;
+            color: rgba(58, 32, 16, 0.6);
+            margin: 0.25rem 0;
+            font-style: italic;
+          "
+        ></p>
+        <div
+          id="popup-pet-neglect"
+          style="font-size: 60px; margin-bottom: 0.5rem"
+        ></div>
         <h3 id="neglect-title">You neglected your duties!</h3>
         <p id="neglect-msg"></p>
         <div
@@ -548,6 +654,19 @@
     <div class="popup-overlay" id="popup-reset" style="display: none">
       <div class="popup-card">
         <div class="popup-icon">💔</div>
+        <p
+          id="popup-mood-reset"
+          style="
+            font-size: 13px;
+            color: rgba(58, 32, 16, 0.6);
+            margin: 0.25rem 0;
+            font-style: italic;
+          "
+        ></p>
+        <div
+          id="popup-pet-reset"
+          style="font-size: 60px; margin-bottom: 0.5rem"
+        ></div>
         <h3>Streak Reset!</h3>
         <p>
           You ran out of hearts. Your streak is back to 0, but your hearts are
@@ -568,6 +687,19 @@
     <div class="popup-overlay" id="popup-leave" style="display: none">
       <div class="popup-card">
         <div class="popup-icon">⚠️</div>
+        <p
+          id="popup-mood-leave"
+          style="
+            font-size: 13px;
+            color: rgba(58, 32, 16, 0.6);
+            margin: 0.25rem 0;
+            font-style: italic;
+          "
+        ></p>
+        <div
+          id="popup-pet-leave"
+          style="font-size: 60px; margin-bottom: 0.5rem"
+        ></div>
         <h3>Leave this page?</h3>
         <p>Your Pomodoro timer is still running. Leaving will cost you a ❤️.</p>
         <div class="popup-btns">

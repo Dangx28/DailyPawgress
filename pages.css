@@ -149,6 +149,7 @@
   background: rgba(146, 69, 64, 0.08);
   padding: 4px 14px;
   border-radius: 999px;
+
 }
 
 /* ── DASHBOARD ── */
@@ -523,6 +524,52 @@
   border-bottom: 1px solid rgba(146, 69, 64, 0.08);
   display: flex;
   justify-content: space-between;
+}
+
+.pom-edit-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.pom-edit-input {
+  width: 70px;
+  height: 50px;
+  text-align: center;
+  background: #fdf6ee;
+  border: 1.5px solid rgba(146, 69, 64, 0.2);
+  border-radius: 10px;
+  font-size: 22px;
+  font-weight: 800;
+  font-family: "Quicksand", sans-serif;
+  color: rgba(146, 69, 64, 0.925);
+  outline: none;
+}
+.pom-edit-input:focus {
+  border-color: palevioletred;
+}
+
+.pom-custom-toggle {
+  display: flex;
+  justify-self: center;
+  background: none;
+  border: 1.5px solid rgba(146, 69, 64, 0.2);
+  border-radius: 999px;
+  font-family: "Nunito", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(146, 69, 64, 0.6);
+  padding: 6px 16px;
+  cursor: pointer;
+  margin-bottom: 1.2rem;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.pom-custom-toggle:hover {
+  background: rgba(146, 69, 64, 0.07);
+  color: rgba(146, 69, 64, 0.925);
 }
 
 /* ── TO-DO ── */
