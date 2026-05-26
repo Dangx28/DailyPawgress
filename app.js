@@ -44,13 +44,7 @@ async function handleLogout() {
   window.location.href = "login.html";
 }
 
-// ── FIRESTORE HELPERS ──
-// Instead of localStorage keys, all data lives under:
-// users/{uid}/profile    — hearts, streak, lastStudy, selectedChar, selectedPet, charName, petName
-// users/{uid}/todos      — collection of todo docs
-// users/{uid}/sessions   — collection of session docs
-// users/{uid}/events     — collection of calendar event docs
-// users/{uid}/stickies   — collection of sticky note docs
+// ── FIRESTORE ARRAYS, dito magsstore lahat ng data once loaded in from database ──
 
 let _profile = {};
 let _todos = [];
@@ -65,7 +59,7 @@ async function loadUserData() {
   const profileSnap = await getDoc(doc(db, "users", uid, "data", "profile"));
   _profile = profileSnap.exists()
     ? profileSnap.data()
-    : {
+    : { // default data for beginning users
         hearts: MAX_HEARTS,
         streak: 0,
         lastStudy: null,
@@ -110,7 +104,7 @@ async function saveProfile(updates) {
   await setDoc(doc(db, "users", currentUser.uid, "data", "profile"), _profile);
 }
 
-// ── PAGE SWITCHING ──
+// page switching
 const pages = ["home", "study", "todo", "calendar", "sticky"];
 
 function showPage(name) {
@@ -129,14 +123,14 @@ function showPage(name) {
 function navTo(name) {
   if (pomRunning && name !== "study") {
     pendingNavTarget = name;
-    updatePopupPets(); // ← add this here
+    updatePopupPets();
     document.getElementById("popup-leave").style.display = "flex";
     return;
   }
   showPage(name);
 }
 
-// ── HEARTS & STREAK ──
+// haerts & streak system
 const MAX_HEARTS = 3;
 
 function getHearts() {
@@ -245,7 +239,7 @@ function checkStreakExpiry() {
   }
 }
 
-// ── PET MOOD ──
+// pet mood
 function getPetMood() {
   const hearts = getHearts();
   if (hearts >= 3)
@@ -287,7 +281,7 @@ function refreshPetMood() {
   document.getElementById("dash-pet-mood").textContent = mood.text;
 }
 
-// ── SETUP ──
+// setup
 let selectedChar = null;
 let selectedPet = null;
 
@@ -422,7 +416,7 @@ function closeCustomize() {
     "none";
 }
 
-// ── POMODORO ──
+// pomodoro
 let pomDurations = { work: 25 * 60, short: 5 * 60, long: 15 * 60 };
 let pomMode = "work";
 let pomSeconds = pomDurations.work;
@@ -442,7 +436,7 @@ function setMode(mode) {
 }
 
 function updateDisplay() {
-  // nirereset yung timer pabalik sa dati
+  // updates display depending sa mode
   const m = String(Math.floor(pomSeconds / 60)).padStart(2, "0");
   const s = String(pomSeconds % 60).padStart(2, "0");
   document.getElementById("pom-display").textContent = m + ":" + s;
@@ -534,7 +528,7 @@ function applyCustomTimer() {
   document.getElementById("pom-custom").style.display = "none";
 }
 
-// ── PAUSE PENALTY ──
+// pause penalty
 const PAUSE_LIMIT = 5 * 60;
 let pauseSeconds = PAUSE_LIMIT;
 let pauseInterval = null;
@@ -567,7 +561,7 @@ function closePausePopup() {
   if (!pomRunning) startPomInterval();
 }
 
-// ── LEAVE PENALTY ──
+// leave penalty
 let pendingNavTarget = null;
 
 function confirmLeave() {
@@ -584,7 +578,7 @@ function cancelLeave() {
   pendingNavTarget = null;
 }
 
-// ── SESSION LOG ──
+// session log
 async function logSession() {
   const label =
     pomMode === "work"
@@ -641,7 +635,7 @@ function applyEditTimer() {
   cancelEditTimer();
 }
 
-// ── TO-DO ──
+// to-do
 function getTodos() {
   return _todos;
 }
@@ -731,7 +725,7 @@ function renderTodos() {
     .join("");
 }
 
-// ── CALENDAR ──
+// calendar
 let calDate = new Date();
 let calSelected = null;
 
@@ -866,7 +860,7 @@ function renderCalEvents(key) {
     .join("");
 }
 
-// ── STICKY NOTES ──
+// sticky notes
 let stickyColor = "#fff9c4";
 
 function setStickyColor(color, btn) {
@@ -935,7 +929,7 @@ function renderStickies() {
     .join("");
 }
 
-// ── DEADLINE CHECKER ──
+// deadline checker
 async function checkDeadlines() {
   const now = new Date();
   let changed = false;
@@ -1009,7 +1003,7 @@ function updatePopupPets() {
   });
 }
 
-// ── Expose functions to HTML ──
+// expose functions to html window
 window.handleLogout = handleLogout;
 window.showPage = showPage;
 window.navTo = navTo;

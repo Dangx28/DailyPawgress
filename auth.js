@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword,
          signInWithEmailAndPassword, onAuthStateChanged }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-// Make db and auth available to app.js
+// Make auth available to app.js
 window.auth = auth;
 
 // Auth guard — only redirect if confirmed logged in
