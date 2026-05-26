@@ -1,7 +1,3 @@
-/* ══════════════════════════════════════════
-   PAGES.CSS  –  DailyPawgress extra styles
-══════════════════════════════════════════ */
-
 /* ── AUTH BODY ── */
 .auth-body {
   background-color: #fdf6ee;
@@ -130,7 +126,7 @@
   margin-top: 1.5rem;
 }
 
-/* ── NAV STREAK BADGE ── */
+/* streak part and user label on the navigation bar */
 .streak-badge {
   display: flex;
   align-items: center;
@@ -152,7 +148,7 @@
 
 }
 
-/* ── DASHBOARD ── */
+/* dashboard */
 .box.selected,
 .pbox.selected {
   outline: 3px solid palevioletred;
@@ -378,7 +374,7 @@
   line-height: 1.6;
 }
 
-/* DASHBOARD RESPONSIVE */
+/* dashboard responsiveness */
 @media (max-width: 760px) {
   .dash-layout {
     flex-direction: column;
@@ -397,7 +393,7 @@
   }
 }
 
-/* ── INNER PAGE ── */
+/* inner page */
 .inner-page {
   max-width: 860px;
   margin: 0 auto;
@@ -446,7 +442,7 @@
   min-height: 16px;
 }
 
-/* ── POMODORO ── */
+/* pomodoro */
 .pomodoro-card {
   background: #fff;
   border-radius: 18px;
@@ -572,7 +568,7 @@
   color: rgba(146, 69, 64, 0.925);
 }
 
-/* ── TO-DO ── */
+/* to-do */
 .todo-add {
   display: flex;
   gap: 0.75rem;
@@ -676,7 +672,7 @@
   color: palevioletred;
 }
 
-/* ── CALENDAR ── */
+/* calendar */
 .cal-card {
   overflow: hidden;
 }
@@ -752,7 +748,7 @@
   bottom: 4px;
 }
 
-/* ── STICKY NOTES ── */
+/* sticky notes */
 .sticky-toolbar {
   display: flex;
   align-items: center;
@@ -833,7 +829,7 @@
   margin-top: 0.5rem;
 }
 
-/* ── POPUPS ── */
+/* popups / warnings */
 .popup-overlay {
   position: fixed;
   inset: 0;
@@ -883,7 +879,7 @@
   margin-top: 0;
 }
 
-/* ── RESPONSIVE ── */
+/* responsiveness */
 @media (max-width: 700px) {
   .pom-timer {
     font-size: 54px;

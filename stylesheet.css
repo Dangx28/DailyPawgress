@@ -26,7 +26,7 @@ span {
   color: palevioletred;
 }
 
-/* ── HEADER ── */
+/* header */
 header {
   position: fixed;
   top: 0;
@@ -81,14 +81,15 @@ header .fa-bars {
   display: none;
 }
 
-/* ── HERO ── */
+/* hero section */
 .firstpage {
   display: flex;
-  min-height: 100vh;
   align-items: center;
+  min-height: 700px;
   padding-top: 7rem;
   padding-left: 18rem;
   background: url("images/background.png") no-repeat center center / cover;
+  background-size: 1100px 700px;
 }
 
 .intro-label {
@@ -132,7 +133,7 @@ header .fa-bars {
   transform: translateY(-2px);
 }
 
-/* ── CHARACTER & PET SECTIONS ── */
+/* customization section */
 
 .char-icon img,
 .pet-icon img {
@@ -250,7 +251,7 @@ header .fa-bars {
   transform: translateY(-1px);
 }
 
-/* ── CHARACTER / PET GRID ── */
+/* character and pet grid */
 .characters,
 .petschibi {
   flex: 1;
@@ -304,40 +305,7 @@ header .fa-bars {
   border-radius: 999px;
 }
 
-/* ── PLACEHOLDER SECTIONS ── */
-.placeholder-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 300px;
-  background-color: #fdf6ee;
-  text-align: center;
-}
-
-.placeholder-section.alt-bg {
-  background-color: #f5ede0;
-}
-
-.placeholder-icon {
-  font-size: 38px;
-  color: rgba(146, 69, 64, 0.2);
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.placeholder-content h2 {
-  font-size: 28px;
-  font-weight: 700;
-  color: rgba(146, 69, 64, 0.925);
-  margin-bottom: 0.5rem;
-}
-
-.placeholder-content p {
-  font-size: 15px;
-  color: rgba(58, 32, 16, 0.5);
-}
-
-/* ── FOOTER ── */
+/* footer */
 footer {
   background-color: rgba(146, 69, 64, 0.925);
   color: rgba(255, 255, 255, 0.85);
@@ -353,7 +321,7 @@ footer .fa-heart {
   color: #ffc0cb;
 }
 
-/* ── RESPONSIVE ── */
+/* responsiveness */
 @media (max-width: 1280px) {
   .firstpage {
     padding-top: 7rem;
@@ -365,25 +333,25 @@ footer .fa-heart {
 }
 
 @media (max-width: 980px) {
-  @media (max-width: 980px) {
-    /* existing rules... */
 
-    header .icons {
-      gap: 0.3rem;
-    }
-    .streak-badge {
-      padding: 4px 8px;
-      font-size: 11px;
-      gap: 0.3rem;
-    }
-    .nav-user {
-      font-size: 11px;
-      padding: 4px 8px;
-      max-width: 120px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
+  header .icons {
+    gap: 0.3rem;
+  }
+  #nav-hearts,
+  #nav-streak {
+    display: none;
+  }
+  .nav-user {
+    font-size: 11px;
+    padding: 4px 8px;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .firstpage {
+    background-size: 1000px 800px;
   }
 
   header .fa-bars {
@@ -435,22 +403,24 @@ footer .fa-heart {
 }
 
 @media (max-width: 700px) {
-  @media (max-width: 700px) {
-    /* existing rules... */
 
-    .nav-user {
-      display: none;
-    }
-    .streak-badge {
-      font-size: 10px;
-      padding: 3px 6px;
-    }
+  .streak-badge {
+    display: none;
+  }
+
+  #nav-hearts,
+  #nav-streak {
+    display: none;
   }
 
   .firstpage {
-    padding-top: 7rem;
-    padding-left: 2rem;
+    align-items: flex-start;
+    justify-content: center;
+    background: url(images/logo2.png) no-repeat;
+    background-size: 400px 300px;
+    background-position: bottom;
   }
+
   .firstpage .introduction h2 {
     font-size: 36px;
   }
@@ -468,6 +438,9 @@ footer .fa-heart {
 @media (max-width: 480px) {
   .firstpage {
     padding-top: 7rem;
+    background: url(images/logo2.png) no-repeat;
+    background-size: 400px 300px;
+    background-position: bottom;
   }
 
   .firstpage .introduction h2 {
