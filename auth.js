@@ -6,12 +6,12 @@ import { createUserWithEmailAndPassword,
 // Make auth available to app.js
 window.auth = auth;
 
-// Auth guard — only redirect if confirmed logged in
+// Auth guard, only redirect if confirmed logged in
 onAuthStateChanged(auth, (user) => {
   if (user) window.location.href = "index.html";
 });
 
-// ── Expose functions to HTML ──
+// Expose functions to HTML
 window.switchTab = function (tab) {
   document.getElementById("form-login").style.display =
     tab === "login" ? "block" : "none";

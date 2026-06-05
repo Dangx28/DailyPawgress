@@ -13,12 +13,12 @@ const firebaseConfig = {
   measurementId: "G-WHQ1BY3Y89",
 };
 
-// 2. Initialize your services globally
+// Initialize services globally
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-// 3. Smart Routing: Only route data to the local emulator if running locally
+// Only route data to the local emulator if running locally
 if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
   console.log("Development environment detected. Routing traffic to local emulators...");
   connectAuthEmulator(auth, "http://localhost:9099", { disableWarnings: true });
